@@ -1,6 +1,6 @@
-# Sample Hardhat Project
+# Buy me a coffee dApp
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+This dApp is a about me platform that uses ReactJs, Solidity, and Ethereum smart contracts. Anyone can use it to donate money to purchase coffee and leave a message for us.
 
 Try running some of the following tasks:
 
