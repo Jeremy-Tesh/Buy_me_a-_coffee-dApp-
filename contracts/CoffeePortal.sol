@@ -5,26 +5,21 @@ pragma solidity ^0.8.0;
 import "hardhat/console.sol";
 
 contract CoffeePortal {
+    uint256 totalCoffee;
 
-uint256 totalCoffee;
+    address payable public owner;
 
-address payable public owner;
-
-
-event NewCoffee(
-    address indexed from,
-    uint256 timestamp,
-    string message,
-    string name
-
-);
-
+    event NewCoffee(
+        address indexed from,
+        uint256 timestamp,
+        string message,
+        string name
+    );
 
     constructor() payable {
         console.log("Yo! Smart Contract");
         owner = payable(msg.sender);
     }
-
 
     struct Coffee {
         address giver;
@@ -35,15 +30,31 @@ event NewCoffee(
 
     Coffee[] coffee;
 
-
     function getAllCoffee() public view returns (Coffee[] memory) {
         return coffee;
     }
 
-
-    function getTotalCoffee() public view returns (uint256){
-        console.log("Total coffee recieved",totalCoffee);
-        return totalCoffee
+    function getTotalCoffee() public view returns (uint256) {
+        console.log("Total coffee recieved", totalCoffee);
+        return totalCoffee;
     }
 
+    function buyCoffee(
+        string memory _message,
+        string memory _name,
+        uint256 _payAmount
+    ) public payable {
+        uint256 cost = 0.001 ether;
+        require(_payAmount <= cost, "INSUFFICIENT ETHER PROVIDED");
+
+        totalCoffee += 1;
+        console.log("%s has just sent a coffee", msg.sender);
+        coffee.push(Coffee(msg.sender, _message, _name, block.timestamp));
+
+        (bool success, ) = owner.call{value: _payAmount}(" ");
+
+        require(success, "Failed to sedn money");
+
+        emit NewCoffee(msg.sender, block.timestamp, _message, _name);
+    }
 }
