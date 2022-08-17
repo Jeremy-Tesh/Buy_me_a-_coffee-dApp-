@@ -7,10 +7,9 @@ const main = async () => {
     await coffeeContract.deployed();
 
     console.log("Coffee contract delpoyed:", coffeeContract.address)
-};
 
 
-let contractBalance = await hre.ethers.provider.getBalance(coffeeContract.address)
+    let contractBalance = await hre.ethers.provider.getBalance(coffeeContract.address)
 console.log("Contract balance:", hre.ethers.utils.formatEther(contractBalance))
 
 
@@ -24,6 +23,11 @@ await coffeeTxn.wait();
 
 
 let allCoffee =  await coffeeContract.getAllCoffee();
+console.log(allCoffee)
+};
+
+
+
 
 
 
